@@ -42,3 +42,4 @@ const FontWeight black = FontWeight.w900;
 BorderRadius defaultBorderRadius = BorderRadius.circular(defaultRadius);
 
 const IconData closeIcon = Icons.close_rounded;
+const IconData backIcon = Icons.arrow_back_ios_new_rounded;

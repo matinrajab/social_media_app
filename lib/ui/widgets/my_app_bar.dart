@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/theme/theme.dart';
+import 'package:social_media_app/ui/shared/theme.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
