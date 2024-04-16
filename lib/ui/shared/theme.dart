@@ -13,7 +13,8 @@ const Color whiteColor = Color(0xffFFFFFF);
 const Color backgroundColor1 = Color(0xff0D0D0D);
 const Color backgroundColor2 = Color(0xff191919);
 const Color transparentColor = Colors.transparent;
-const Color inactiveColor = Color(0xff3F3F3F);
+const Color inactiveBorderColor = Color(0xff3F3F3F);
+const Color inactiveButtonColor = Color(0xff545454);
 
 TextStyle primaryColorTextStyle = GoogleFonts.poppins(
   color: primaryColor,

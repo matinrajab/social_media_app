@@ -22,7 +22,7 @@ class MyTextFormField extends StatelessWidget {
       cursorColor: primaryTextColor,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: inactiveColor),
+          borderSide: const BorderSide(color: inactiveBorderColor),
           borderRadius: defaultBorderRadius,
         ),
         focusedBorder: OutlineInputBorder(

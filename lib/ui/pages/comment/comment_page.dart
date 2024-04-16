@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/ui/pages/comment/widgets/comment_card.dart';
 import 'package:social_media_app/ui/shared/assets_dir.dart';
@@ -10,7 +9,7 @@ import 'package:social_media_app/ui/widgets/post_card.dart';
 class CommentPage extends StatefulWidget {
   static const routeName = '/comment';
 
-  CommentPage({super.key});
+  const CommentPage({super.key});
 
   @override
   State<CommentPage> createState() => _CommentPageState();
@@ -23,7 +22,7 @@ class _CommentPageState extends State<CommentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor1,
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         text: 'Comments',
         leadingIcon: backIcon,
       ),
@@ -31,7 +30,7 @@ class _CommentPageState extends State<CommentPage> {
         children: [
           Expanded(
             child: ListView(
-              children: [
+              children: const [
                 PostCard(
                   username: 'zuck',
                   dateTime: '2w',
@@ -84,7 +83,7 @@ class _CommentPageState extends State<CommentPage> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 prefixIcon: Container(
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   child: Image.asset(
                     '$imagesDir/avatar.png',
                     width: 36,
@@ -93,14 +92,14 @@ class _CommentPageState extends State<CommentPage> {
                 suffixIcon: _commentController.text.isEmpty
                     ? const SizedBox()
                     : Container(
-                        margin: EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         child: MyButton(
                           text: 'Post',
                           width: 65,
                           fontColor: backgroundColor1,
                           buttonColor: whiteColor,
                           borderColor: whiteColor,
-                          radius: 50,
+                          radius: 20,
                           onTap: () {
                             _commentController.clear();
                           },
@@ -108,7 +107,7 @@ class _CommentPageState extends State<CommentPage> {
                       ),
                 hintText: 'Add a comment for ...',
                 hintStyle: secondaryTextStyle,
-                contentPadding: EdgeInsets.all(8),
+                contentPadding: const EdgeInsets.all(8),
                 filled: true,
                 fillColor: backgroundColor2,
               ),

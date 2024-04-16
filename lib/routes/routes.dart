@@ -10,5 +10,5 @@ final Map<String, WidgetBuilder> routes = {
   RegisterPage.routeName: (context) => RegisterPage(),
   MainPage.routeName: (context) => const MainPage(),
   PostPage.routeName: (context) => const PostPage(),
-  CommentPage.routeName: (context) => CommentPage(),
+  CommentPage.routeName: (context) => const CommentPage(),
 };

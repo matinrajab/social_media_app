@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
     this.fontWeight,
     this.fontColor,
     this.buttonColor = transparentColor,
-    this.borderColor = inactiveColor,
+    this.borderColor = inactiveBorderColor,
     required this.text,
     this.onTap,
   });
