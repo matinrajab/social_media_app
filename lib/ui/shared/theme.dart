@@ -10,11 +10,12 @@ const Color secondaryTextColor = Color(0xffA0A0A0);
 const Color subtitleTextColor = Color(0xffB8B8B8);
 const Color redColor = Color(0xffEC4A55);
 const Color whiteColor = Color(0xffFFFFFF);
-const Color backgroundColor1 = Color(0xff0D0D0D);
-const Color backgroundColor2 = Color(0xff191919);
 const Color transparentColor = Colors.transparent;
+const Color backgroundColor1 = Color(0xff0D0D0D);
+const Color backgroundColor2 = Color(0xff262626);
+const Color dividerColor = Color(0xff393939);
 const Color inactiveBorderColor = Color(0xff3F3F3F);
-const Color inactiveButtonColor = Color(0xff545454);
+const Color inactiveWhiteButtonColor = Color(0xff545454);
 
 TextStyle primaryColorTextStyle = GoogleFonts.poppins(
   color: primaryColor,
@@ -44,3 +45,4 @@ BorderRadius defaultBorderRadius = BorderRadius.circular(defaultRadius);
 
 const IconData closeIcon = Icons.close_rounded;
 const IconData backIcon = Icons.arrow_back_ios_new_rounded;
+const IconData checkIcon = Icons.check;

@@ -6,6 +6,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData? leadingIcon;
   final VoidCallback? onLeadingPressed;
   final List<Widget>? actions;
+  final bool? centerTitle;
 
   const MyAppBar({
     super.key,
@@ -13,6 +14,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingIcon,
     this.onLeadingPressed,
     this.actions,
+    this.centerTitle,
   });
 
   @override
@@ -25,6 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 18,
         ),
       ),
+      centerTitle: centerTitle,
       leading: leadingIcon != null
           ? IconButton(
               onPressed: onLeadingPressed ?? () => Navigator.pop(context),

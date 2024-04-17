@@ -95,10 +95,10 @@ class _PostPageState extends State<PostPage> {
                       width: 65,
                       fontColor: backgroundColor1,
                       buttonColor: _postController.text.isEmpty
-                          ? inactiveButtonColor
+                          ? inactiveWhiteButtonColor
                           : whiteColor,
                       borderColor: _postController.text.isEmpty
-                          ? inactiveButtonColor
+                          ? inactiveWhiteButtonColor
                           : whiteColor,
                       radius: 20,
                       onTap: _postController.text.isEmpty

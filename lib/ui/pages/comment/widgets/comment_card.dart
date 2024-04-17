@@ -71,7 +71,7 @@ class CommentCard extends StatelessWidget {
           ),
         ),
         const Divider(
-          color: backgroundColor2,
+          color: dividerColor,
         ),
       ],
     );

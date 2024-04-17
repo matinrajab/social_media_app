@@ -24,7 +24,6 @@ class Footer extends StatelessWidget {
             '$text ',
             style: primaryTextStyle.copyWith(
               fontSize: 12,
-              fontWeight: regular,
             ),
           ),
           GestureDetector(

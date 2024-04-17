@@ -25,14 +25,14 @@ class LoginPage extends StatelessWidget {
           children: [
             MyTextFormField(
               controller: _emailController,
-              hintText: 'Email',
+              labelText: 'Email',
             ),
             const SizedBox(
               height: defaultPadding,
             ),
             MyTextFormField(
               controller: _passwordController,
-              hintText: 'Password',
+              labelText: 'Password',
               obscureText: true,
             ),
             const SizedBox(

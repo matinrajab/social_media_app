@@ -25,28 +25,28 @@ class RegisterPage extends StatelessWidget {
           children: [
             MyTextFormField(
               controller: _nameController,
-              hintText: 'Name',
+              labelText: 'Name',
             ),
             const SizedBox(
               height: defaultPadding,
             ),
             MyTextFormField(
               controller: _usernameController,
-              hintText: 'Username',
+              labelText: 'Username',
             ),
             const SizedBox(
               height: defaultPadding,
             ),
             MyTextFormField(
               controller: _emailController,
-              hintText: 'Email',
+              labelText: 'Email',
             ),
             const SizedBox(
               height: defaultPadding,
             ),
             MyTextFormField(
               controller: _passwordController,
-              hintText: 'Password',
+              labelText: 'Password',
               obscureText: true,
             ),
             const SizedBox(

@@ -3,13 +3,13 @@ import 'package:social_media_app/ui/shared/theme.dart';
 
 class MyTextFormField extends StatelessWidget {
   final TextEditingController controller;
-  final String hintText;
+  final String labelText;
   final bool obscureText;
 
   const MyTextFormField({
     super.key,
     required this.controller,
-    required this.hintText,
+    required this.labelText,
     this.obscureText = false,
   });
 
@@ -29,8 +29,8 @@ class MyTextFormField extends StatelessWidget {
           borderSide: const BorderSide(color: whiteColor),
           borderRadius: defaultBorderRadius,
         ),
-        hintText: hintText,
-        hintStyle: subtitleTextStyle,
+        labelText: labelText,
+        labelStyle: subtitleTextStyle,
         contentPadding: const EdgeInsets.all(20),
       ),
     );
