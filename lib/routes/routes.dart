@@ -5,6 +5,7 @@ import 'package:social_media_app/ui/pages/comment/comment_page.dart';
 import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/pages/post/post_page.dart';
 import 'package:social_media_app/ui/pages/profile/edit_profile_page.dart';
+import 'package:social_media_app/ui/pages/setting/setting_page.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LoginPage.routeName: (context) => LoginPage(),
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   PostPage.routeName: (context) => const PostPage(),
   CommentPage.routeName: (context) => const CommentPage(),
   EditProfilePage.routeName: (context) => const EditProfilePage(),
+  SettingPage.routeName: (context) => const SettingPage(),
 };

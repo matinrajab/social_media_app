@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/ui/pages/auth/register_page.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/footer.dart';
 import 'package:social_media_app/ui/pages/main/main_page.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/my_text_form_field.dart';
 

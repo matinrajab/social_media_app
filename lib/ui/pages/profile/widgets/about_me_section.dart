@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/shared/assets_dir.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/assets_dir.dart';
+import 'package:social_media_app/shared/theme.dart';
 
 class AboutMeSection extends StatelessWidget {
   const AboutMeSection({super.key});

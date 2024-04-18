@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:social_media_app/shared/theme.dart';
 
 class MyButton extends StatelessWidget {
   final double? height;
@@ -18,7 +19,7 @@ class MyButton extends StatelessWidget {
     this.width,
     this.radius = defaultRadius,
     this.fontWeight,
-    this.fontColor,
+    this.fontColor = primaryTextColor,
     this.buttonColor = transparentColor,
     this.borderColor = inactiveBorderColor,
     required this.text,
@@ -46,7 +47,7 @@ class MyButton extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
                 text,
-                style: primaryTextStyle.copyWith(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: fontWeight,
                   color: fontColor,

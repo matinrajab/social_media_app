@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:social_media_app/ui/pages/profile/edit_profile_field_page.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
 
 class EditProfilePage extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/theme.dart';
 
 class MyBottomNavBarItem extends StatelessWidget {
   final GestureTapCallback onTap;

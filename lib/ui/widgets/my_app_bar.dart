@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/theme.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
@@ -24,7 +24,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         text,
         style: primaryTextStyle.copyWith(
-          fontSize: 18,
+          fontSize: 20,
+          fontWeight: bold,
         ),
       ),
       centerTitle: centerTitle,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/footer.dart';
-import 'package:social_media_app/ui/shared/theme.dart';
+import 'package:social_media_app/shared/theme.dart';
+import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/my_text_form_field.dart';
 
@@ -52,13 +53,15 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(
               height: defaultPadding,
             ),
-            const MyButton(
+            MyButton(
               text: 'Register',
               borderColor: primaryColor,
               buttonColor: primaryColor,
               height: 50,
               radius: 25,
               fontWeight: medium,
+              onTap: () => Navigator.pushNamedAndRemoveUntil(
+                  context, MainPage.routeName, (route) => false),
             ),
             const SizedBox(
               height: defaultPadding,

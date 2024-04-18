@@ -8,7 +8,7 @@ const Color primaryColor = Color(0xff0070FA);
 const Color primaryTextColor = Color(0xffFFFFFF);
 const Color secondaryTextColor = Color(0xffA0A0A0);
 const Color subtitleTextColor = Color(0xffB8B8B8);
-const Color redColor = Color(0xffEC4A55);
+const Color dangerColor = Color(0xffEC4A55);
 const Color whiteColor = Color(0xffFFFFFF);
 const Color transparentColor = Colors.transparent;
 const Color backgroundColor1 = Color(0xff0D0D0D);
@@ -33,6 +33,10 @@ TextStyle subtitleTextStyle = GoogleFonts.poppins(
   color: subtitleTextColor,
 );
 
+TextStyle dangerTextStyle = GoogleFonts.poppins(
+  color: dangerColor,
+);
+
 const FontWeight light = FontWeight.w300;
 const FontWeight regular = FontWeight.w400;
 const FontWeight medium = FontWeight.w500;
@@ -44,5 +48,5 @@ const FontWeight black = FontWeight.w900;
 BorderRadius defaultBorderRadius = BorderRadius.circular(defaultRadius);
 
 const IconData closeIcon = Icons.close_rounded;
-const IconData backIcon = Icons.arrow_back_ios_new_rounded;
+const IconData backIcon = Icons.arrow_back_rounded;
 const IconData checkIcon = Icons.check;
