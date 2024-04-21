@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/cubits/auth_cubit.dart';
+import 'package:social_media_app/cubits/auth_state.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/footer.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
 import 'package:social_media_app/ui/pages/auth/widgets/my_text_form_field.dart';
+import 'package:social_media_app/ui/widgets/my_circular_indicator.dart';
+import 'package:social_media_app/ui/widgets/my_message.dart';
 
 class RegisterPage extends StatelessWidget {
   static const routeName = '/register';
@@ -53,15 +58,31 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(
               height: defaultPadding,
             ),
-            MyButton(
-              text: 'Register',
-              borderColor: primaryColor,
-              buttonColor: primaryColor,
-              height: 50,
-              radius: 25,
-              fontWeight: medium,
-              onTap: () => Navigator.pushNamedAndRemoveUntil(
-                  context, MainPage.routeName, (route) => false),
+            BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is AuthSuccess) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, MainPage.routeName, (route) => false);
+                } else if (state is AuthFailed) {
+                  MyMessage.displayMessage(context, message: state.error);
+                }
+              },
+              builder: (context, state) => (state is AuthLoading)
+                  ? MyCircularIndicator.show()
+                  : MyButton(
+                      text: 'Register',
+                      borderColor: primaryColor,
+                      buttonColor: primaryColor,
+                      height: 50,
+                      radius: 25,
+                      fontWeight: medium,
+                      onTap: () => context.read<AuthCubit>().signUp(
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text,
+                            name: _nameController.text.trim(),
+                            username: _usernameController.text.trim(),
+                          ),
+                    ),
             ),
             const SizedBox(
               height: defaultPadding,
