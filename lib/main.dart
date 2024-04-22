@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/firebase_options.dart';
 import 'package:social_media_app/providers/providers.dart';
 import 'package:social_media_app/routes/routes.dart';
-import 'package:social_media_app/ui/pages/auth/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +27,6 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AuthPage.routeName,
         routes: routes,
       ),
     );

@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/cubits/auth_cubit.dart';
+import 'package:social_media_app/cubits/auth_state.dart';
+import 'package:social_media_app/cubits/page_cubit.dart';
+import 'package:social_media_app/cubits/post_controller_cubit.dart';
+import 'package:social_media_app/cubits/post_controller_state.dart';
+import 'package:social_media_app/cubits/post_cubit.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
+import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
 
-class PostPage extends StatefulWidget {
+class PostPage extends StatelessWidget {
   static const routeName = '/post';
 
-  const PostPage({super.key});
+  PostPage({super.key});
 
-  @override
-  State<PostPage> createState() => _PostPageState();
-}
-
-class _PostPageState extends State<PostPage> {
   final TextEditingController _postController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String username = context
+        .select((AuthCubit auth) => (auth.state as AuthSuccess).user.username);
+    context
+        .read<PostControllerCubit>()
+        .isPostControllerEmpty(_postController.text);
+
     return Scaffold(
       backgroundColor: backgroundColor1,
       appBar: const MyAppBar(
@@ -44,26 +53,38 @@ class _PostPageState extends State<PostPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            'username',
-                            style: primaryTextStyle.copyWith(
-                              fontSize: 16,
-                              fontWeight: semiBold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          child: BlocBuilder<AuthCubit, AuthState>(
+                            builder: (context, state) {
+                              username = (state as AuthSuccess).user.username;
+                              return Text(
+                                username,
+                                style: primaryTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: semiBold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            },
                           ),
                         ),
-                        _postController.text.isNotEmpty
-                            ? GestureDetector(
-                                onTap: () => setState(() {
-                                  _postController.clear();
-                                }),
-                                child: const Icon(
-                                  closeIcon,
-                                  color: secondaryTextColor,
-                                ),
-                              )
-                            : const SizedBox(),
+                        BlocBuilder<PostControllerCubit, PostControllerState>(
+                          builder: (context, state) =>
+                              (state is PostControllerNotEmpty)
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        _postController.clear();
+                                        context
+                                            .read<PostControllerCubit>()
+                                            .isPostControllerEmpty(
+                                                _postController.text);
+                                      },
+                                      child: const Icon(
+                                        closeIcon,
+                                        color: secondaryTextColor,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -72,7 +93,9 @@ class _PostPageState extends State<PostPage> {
                     TextFormField(
                       controller: _postController,
                       onChanged: (value) {
-                        setState(() {});
+                        context
+                            .read<PostControllerCubit>()
+                            .isPostControllerEmpty(value.trim());
                       },
                       style: primaryTextStyle,
                       cursorColor: primaryTextColor,
@@ -86,29 +109,37 @@ class _PostPageState extends State<PostPage> {
                       ),
                       minLines: 1,
                       maxLines: 100,
+                      autofocus: true,
                     ),
                     const SizedBox(
                       height: 4,
                     ),
-                    MyButton(
-                      text: 'Post',
-                      width: 65,
-                      fontColor: backgroundColor1,
-                      buttonColor: _postController.text.isEmpty
-                          ? inactiveWhiteButtonColor
-                          : whiteColor,
-                      borderColor: _postController.text.isEmpty
-                          ? inactiveWhiteButtonColor
-                          : whiteColor,
-                      radius: 20,
-                      onTap: _postController.text.isEmpty
-                          ? () {}
-                          : () {
-                              setState(() {
-                                _postController.clear();
-                              });
-                            },
-                    )
+                    BlocBuilder<PostControllerCubit, PostControllerState>(
+                      builder: (context, state) => MyButton(
+                        text: 'Post',
+                        width: 65,
+                        fontColor: backgroundColor1,
+                        buttonColor: (state is PostControllerEmpty)
+                            ? inactiveWhiteButtonColor
+                            : whiteColor,
+                        borderColor: (state is PostControllerEmpty)
+                            ? inactiveWhiteButtonColor
+                            : whiteColor,
+                        radius: 20,
+                        onTap: (state is PostControllerNotEmpty)
+                            ? () {
+                                context.read<PostCubit>().createPost(
+                                      username: username,
+                                      content: _postController.text.trim(),
+                                    );
+                                context.read<PostCubit>().getPosts();
+                                context.read<PageCubit>().setCurrentIndex(0);
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    MainPage.routeName, (route) => false);
+                              }
+                            : null,
+                      ),
+                    ),
                   ],
                 ),
               ),

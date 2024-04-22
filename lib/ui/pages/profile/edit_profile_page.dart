@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:social_media_app/cubits/auth_cubit.dart';
+import 'package:social_media_app/cubits/auth_state.dart';
+import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/ui/pages/profile/edit_profile_field_page.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
@@ -8,8 +12,6 @@ class EditProfilePage extends StatelessWidget {
   static const routeName = '/edit-profile';
 
   const EditProfilePage({super.key});
-
-  final bool _isBioEmpty = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +33,40 @@ class EditProfilePage extends StatelessWidget {
                 color: dividerColor,
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildSection(
-                  context,
-                  title: 'Name',
-                  content: 'Matin Muhammad R',
-                  maxLength: 150,
-                ),
-                buildDivider(),
-                buildSection(
-                  context,
-                  title: 'Username',
-                  content: 'matinmr__',
-                  maxLength: 30,
-                ),
-                buildDivider(),
-                buildSection(
-                  context,
-                  title: 'Bio',
-                  content:
-                      _isBioEmpty ? '+ Write bio' : 'Sfasfsg sadfdfsa fasdf',
-                  contentTextColor:
-                      _isBioEmpty ? secondaryTextColor : primaryTextColor,
-                  isContentNull: _isBioEmpty,
-                  maxLength: 150,
-                ),
-              ],
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                UserModel user = (state as AuthSuccess).user;
+                bool isBioEmpty = user.bio == '';
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildSection(
+                      context,
+                      title: 'Name',
+                      content: user.name,
+                      maxLength: 150,
+                    ),
+                    buildDivider(),
+                    buildSection(
+                      context,
+                      title: 'Username',
+                      content: user.username,
+                      maxLength: 30,
+                    ),
+                    buildDivider(),
+                    buildSection(
+                      context,
+                      title: 'Bio',
+                      content: isBioEmpty ? '+ Write bio' : user.bio,
+                      contentTextColor:
+                          isBioEmpty ? secondaryTextColor : primaryTextColor,
+                      isContentNull: isBioEmpty,
+                      maxLength: 150,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

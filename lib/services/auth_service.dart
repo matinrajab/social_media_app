@@ -42,6 +42,7 @@ class AuthService {
         email: email,
         name: name,
         username: username,
+        bio: '',
       );
 
       await UserService().setUser(user);

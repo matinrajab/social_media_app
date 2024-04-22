@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/cubits/auth_cubit.dart';
+import 'package:social_media_app/cubits/auth_state.dart';
 import 'package:social_media_app/ui/pages/profile/edit_profile_page.dart';
 import 'package:social_media_app/ui/pages/profile/widgets/about_me_section.dart';
 import 'package:social_media_app/ui/pages/setting/setting_page.dart';
@@ -19,21 +22,23 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MyAppBar(
-          text: 'matinmr__',
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: defaultPadding),
-              child: GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, SettingPage.routeName),
-                child: Image.asset(
-                  '$iconsDir/menu.png',
-                  width: 40,
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) => MyAppBar(
+            text: (state as AuthSuccess).user.username,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: defaultPadding),
+                child: GestureDetector(
+                  onTap: () =>
+                      Navigator.pushNamed(context, SettingPage.routeName),
+                  child: Image.asset(
+                    '$iconsDir/menu.png',
+                    width: 40,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Expanded(
           child: ListView(

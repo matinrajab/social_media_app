@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/cubits/auth_cubit.dart';
 import 'package:social_media_app/cubits/auth_state.dart';
+import 'package:social_media_app/cubits/page_cubit.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/pages/auth/login_page.dart';
 import 'package:social_media_app/ui/widgets/my_alert_dialog.dart';
@@ -34,6 +35,7 @@ class SettingPage extends StatelessWidget {
                   if (state is AuthInitial) {
                     Navigator.pushNamedAndRemoveUntil(
                         context, LoginPage.routeName, (route) => false);
+                    context.read<PageCubit>().setCurrentIndex(0);
                   } else if (state is AuthFailed) {
                     MyMessage.displayMessage(context, message: state.error);
                   }

@@ -11,6 +11,7 @@ class UserService {
         'email': user.email,
         'name': user.name,
         'username': user.username,
+        'bio': user.bio,
       });
     } catch (e) {
       rethrow;
@@ -25,6 +26,7 @@ class UserService {
         email: snapshot['email'],
         name: snapshot['name'],
         username: snapshot['username'],
+        bio: snapshot['bio'],
       );
     } catch (e) {
       rethrow;
