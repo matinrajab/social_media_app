@@ -1,23 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 
-class PostModel extends Equatable {
+class PostModel {
+  String? postId;
   final String username;
   final String content;
   final Timestamp timestamp;
+  final List<String> likes;
 
-  const PostModel({
+  PostModel({
+    this.postId,
     required this.username,
     required this.content,
     required this.timestamp,
+    required this.likes,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
+        postId: json['postId'],
         username: json['username'],
         content: json['content'],
         timestamp: json['timestamp'],
+        likes: List<String>.from(json['likes']),
       );
-
-  @override
-  List<Object?> get props => [username, content, timestamp];
 }

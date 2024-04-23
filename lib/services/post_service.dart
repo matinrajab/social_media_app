@@ -14,26 +14,45 @@ class PostService {
         'username': username,
         'content': content,
         'timestamp': Timestamp.now(),
+        'likes': [],
       });
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<PostModel>> getPosts() async {
+  Stream<List<PostModel>> getAllPosts() {
     try {
-      QuerySnapshot result = await _postReference
-          .orderBy(
-            'timestamp',
-            descending: true,
-          )
-          .get();
+      return _postReference
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .map((QuerySnapshot list) {
+        var result = list.docs.map<PostModel>((DocumentSnapshot e) {
+          PostModel post = PostModel.fromJson(e.data() as Map<String, dynamic>);
+          post.postId = e.id;
+          return post;
+        }).toList();
 
-      List<PostModel> posts = result.docs
-          .map((e) => PostModel.fromJson(e.data() as Map<String, dynamic>))
-          .toList();
+        return result;
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-      return posts;
+  Future<void> toggleLike({
+    required bool isLiked,
+    required String idCurrentUser,
+    required String postId,
+  }) async {
+    try {
+      DocumentReference postRef = _postReference.doc(postId);
+
+      postRef.update({
+        'likes': isLiked
+            ? FieldValue.arrayUnion([idCurrentUser])
+            : FieldValue.arrayRemove([idCurrentUser]),
+      });
     } catch (e) {
       rethrow;
     }

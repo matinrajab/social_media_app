@@ -8,7 +8,6 @@ import 'package:social_media_app/cubits/post_controller_state.dart';
 import 'package:social_media_app/cubits/post_cubit.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
-import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
 
@@ -132,10 +131,8 @@ class PostPage extends StatelessWidget {
                                       username: username,
                                       content: _postController.text.trim(),
                                     );
-                                context.read<PostCubit>().getPosts();
                                 context.read<PageCubit>().setCurrentIndex(0);
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    MainPage.routeName, (route) => false);
+                                Navigator.pop(context);
                               }
                             : null,
                       ),

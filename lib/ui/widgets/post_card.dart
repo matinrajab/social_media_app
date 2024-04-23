@@ -1,25 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/cubits/post_cubit.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
 
 class PostCard extends StatelessWidget {
+  final String idCurrentUser;
+  final String postId;
   final String username;
-  final String dateTime;
   final String content;
+  final String dateTime;
   final int totalLikes;
   final int totalComments;
+  final List<String> likes;
 
   const PostCard({
     super.key,
+    required this.idCurrentUser,
+    required this.postId,
     required this.username,
-    required this.dateTime,
     required this.content,
+    required this.dateTime,
     required this.totalLikes,
     required this.totalComments,
+    required this.likes,
   });
 
   @override
   Widget build(BuildContext context) {
+    bool isLiked = likes.contains(idCurrentUser);
+
+    void toggleLike() {
+      isLiked = !isLiked;
+
+      context.read<PostCubit>().toggleLike(
+            isLiked: isLiked,
+            idCurrentUser: idCurrentUser,
+            postId: postId,
+          );
+    }
+
     return Column(
       children: [
         Padding(
@@ -75,15 +95,18 @@ class PostCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         buildAction(
-                          '$iconsDir/is_not_liked.png',
-                          totalLikes,
+                          iconPath: isLiked
+                              ? '$iconsDir/is_liked.png'
+                              : '$iconsDir/is_not_liked.png',
+                          total: totalLikes,
+                          onTap: toggleLike,
                         ),
                         const SizedBox(
                           width: 12,
                         ),
                         buildAction(
-                          '$iconsDir/comment.png',
-                          totalComments,
+                          iconPath: '$iconsDir/comment.png',
+                          total: totalComments,
                         ),
                       ],
                     ),
@@ -100,12 +123,19 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  Widget buildAction(String iconPath, int total) {
+  Widget buildAction({
+    required String iconPath,
+    required int total,
+    GestureTapCallback? onTap,
+  }) {
     return Column(
       children: [
-        Image.asset(
-          iconPath,
-          width: 24,
+        GestureDetector(
+          onTap: onTap,
+          child: Image.asset(
+            iconPath,
+            width: 24,
+          ),
         ),
         Text(
           '$total',

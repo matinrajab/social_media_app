@@ -11,7 +11,6 @@ import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
-import 'package:social_media_app/ui/widgets/post_card.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -81,30 +80,14 @@ class ProfilePage extends StatelessWidget {
                     )
                   : const Column(
                       children: [
-                        PostCard(
-                          username: 'zuck',
-                          dateTime: '2w',
-                          content:
-                              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                          totalLikes: 5,
-                          totalComments: 0,
-                        ),
-                        PostCard(
-                          username: 'zuck',
-                          dateTime: '2w',
-                          content:
-                              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                          totalLikes: 5,
-                          totalComments: 0,
-                        ),
-                        PostCard(
-                          username: 'zuck',
-                          dateTime: '2w',
-                          content:
-                              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                          totalLikes: 5,
-                          totalComments: 0,
-                        ),
+                        // PostCard(
+                        //   username: 'zuck',
+                        //   dateTime: '2w',
+                        //   content:
+                        //       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
+                        //   totalLikes: 5,
+                        //   totalComments: 0,
+                        // ),
                       ],
                     ),
             ],

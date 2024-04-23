@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/cubits/post_state.dart';
-import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/services/post_service.dart';
 
 class PostCubit extends Cubit<PostState> {
@@ -22,13 +21,21 @@ class PostCubit extends Cubit<PostState> {
     }
   }
 
-  void getPosts() async {
+  void toggleLike({
+    required bool isLiked,
+    required String idCurrentUser,
+    required String postId,
+  }) async {
     try {
       emit(PostLoading());
 
-      List<PostModel> posts = await PostService().getPosts();
+      await PostService().toggleLike(
+        isLiked: isLiked,
+        idCurrentUser: idCurrentUser,
+        postId: postId,
+      );
 
-      emit(PostSuccess(posts));
+      emit(const PostSuccess([]));
     } catch (e) {
       emit(PostFailed('$e'));
     }
