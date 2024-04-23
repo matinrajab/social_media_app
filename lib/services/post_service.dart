@@ -29,7 +29,7 @@ class PostService {
           .map((QuerySnapshot list) {
         var result = list.docs.map<PostModel>((DocumentSnapshot e) {
           PostModel post = PostModel.fromJson(e.data() as Map<String, dynamic>);
-          post.postId = e.id;
+          post.id = e.id;
           return post;
         }).toList();
 
@@ -42,7 +42,7 @@ class PostService {
 
   Future<void> toggleLike({
     required bool isLiked,
-    required String idCurrentUser,
+    required String usernameCurrentUser,
     required String postId,
   }) async {
     try {
@@ -50,8 +50,8 @@ class PostService {
 
       postRef.update({
         'likes': isLiked
-            ? FieldValue.arrayUnion([idCurrentUser])
-            : FieldValue.arrayRemove([idCurrentUser]),
+            ? FieldValue.arrayUnion([usernameCurrentUser])
+            : FieldValue.arrayRemove([usernameCurrentUser]),
       });
     } catch (e) {
       rethrow;

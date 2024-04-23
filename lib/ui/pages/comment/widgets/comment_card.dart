@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app/helpers/date_fomatter.dart';
+import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
 
 class CommentCard extends StatelessWidget {
-  final String username;
-  final String dateTime;
-  final String content;
+  final CommentModel comment;
 
   const CommentCard({
     super.key,
-    required this.username,
-    required this.dateTime,
-    required this.content,
+    required this.comment,
   });
 
   @override
@@ -38,7 +36,7 @@ class CommentCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            username,
+                            comment.commentator,
                             style: primaryTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: semiBold,
@@ -47,7 +45,7 @@ class CommentCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          dateTime,
+                          dateFormatter(comment.timestamp),
                           style: secondaryTextStyle.copyWith(
                             fontSize: 12,
                           ),
@@ -58,7 +56,7 @@ class CommentCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      content,
+                      comment.content,
                       style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: light,

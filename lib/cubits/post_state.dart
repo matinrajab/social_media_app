@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:social_media_app/models/post_model.dart';
 
 abstract class PostState extends Equatable {
   const PostState();
@@ -12,14 +11,7 @@ class PostInitial extends PostState {}
 
 class PostLoading extends PostState {}
 
-class PostSuccess extends PostState {
-  final List<PostModel> posts;
-
-  const PostSuccess(this.posts);
-
-  @override
-  List<Object> get props => [posts];
-}
+class PostSuccess extends PostState {}
 
 class PostFailed extends PostState {
   final String error;

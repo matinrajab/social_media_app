@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media_app/cubits/comment_cubit.dart';
+import 'package:social_media_app/cubits/text_controller_cubit.dart';
+import 'package:social_media_app/cubits/text_controller_state.dart';
+import 'package:social_media_app/models/comment_model.dart';
+import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/services/comment_service.dart';
 import 'package:social_media_app/ui/pages/comment/widgets/comment_card.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/widgets/my_app_bar.dart';
 import 'package:social_media_app/ui/widgets/my_button.dart';
+import 'package:social_media_app/ui/widgets/my_circular_indicator.dart';
+import 'package:social_media_app/ui/widgets/post_card.dart';
 
-class CommentPage extends StatefulWidget {
-  static const routeName = '/comment';
+class CommentPage extends StatelessWidget {
+  final String usernameCurrentUser;
+  final PostModel post;
 
-  const CommentPage({super.key});
+  CommentPage({
+    super.key,
+    required this.usernameCurrentUser,
+    required this.post,
+  });
 
-  @override
-  State<CommentPage> createState() => _CommentPageState();
-}
-
-class _CommentPageState extends State<CommentPage> {
   final TextEditingController _commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    context
+        .read<TextControllerCubit>()
+        .isTextControllerEmpty(_commentController.text);
+
     return Scaffold(
       backgroundColor: backgroundColor1,
       appBar: const MyAppBar(
@@ -29,36 +42,36 @@ class _CommentPageState extends State<CommentPage> {
         children: [
           Expanded(
             child: ListView(
-              children: const [
-                // PostCard(
-                //   username: 'zuck',
-                //   dateTime: '2w',
-                //   content:
-                //       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                //   totalLikes: 5,
-                //   totalComments: 0,
-                // ),
-                Column(
-                  children: [
-                    CommentCard(
-                      username: 'zuck',
-                      dateTime: '2w',
-                      content:
-                          'This is comment text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                    ),
-                    CommentCard(
-                      username: 'zuck',
-                      dateTime: '2w',
-                      content:
-                          'This is comment text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                    ),
-                    CommentCard(
-                      username: 'zuck',
-                      dateTime: '2w',
-                      content:
-                          'This is comment text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an',
-                    ),
-                  ],
+              children: [
+                PostCard(
+                  usernameCurrentUser: usernameCurrentUser,
+                  post: post,
+                ),
+                StreamBuilder<List<CommentModel>>(
+                  stream: CommentService().getCommentsByPostId(post.id!),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<CommentModel> comments = snapshot.data!;
+                      return Column(
+                        children: comments
+                            .map(
+                              (comment) => CommentCard(
+                                comment: comment,
+                              ),
+                            )
+                            .toList(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: primaryTextStyle,
+                        ),
+                      );
+                    } else {
+                      return MyCircularIndicator.show(color: whiteColor);
+                    }
+                  },
                 ),
               ],
             ),
@@ -68,7 +81,9 @@ class _CommentPageState extends State<CommentPage> {
             child: TextFormField(
               controller: _commentController,
               onChanged: (value) {
-                setState(() {});
+                context
+                    .read<TextControllerCubit>()
+                    .isTextControllerEmpty(value.trim());
               },
               style: primaryTextStyle,
               cursorColor: primaryTextColor,
@@ -88,22 +103,34 @@ class _CommentPageState extends State<CommentPage> {
                     width: 36,
                   ),
                 ),
-                suffixIcon: _commentController.text.isEmpty
-                    ? const SizedBox()
-                    : Container(
-                        margin: const EdgeInsets.all(8),
-                        child: MyButton(
-                          text: 'Post',
-                          width: 65,
-                          fontColor: backgroundColor1,
-                          buttonColor: whiteColor,
-                          borderColor: whiteColor,
-                          radius: 20,
-                          onTap: () {
-                            _commentController.clear();
-                          },
+                suffixIcon:
+                    BlocBuilder<TextControllerCubit, TextControllerState>(
+                  builder: (context, state) => (state is TextControllerEmpty)
+                      ? const SizedBox()
+                      : Container(
+                          margin: const EdgeInsets.all(8),
+                          child: MyButton(
+                            text: 'Post',
+                            width: 65,
+                            fontColor: backgroundColor1,
+                            buttonColor: whiteColor,
+                            borderColor: whiteColor,
+                            radius: 20,
+                            onTap: () {
+                              context.read<CommentCubit>().addComment(
+                                    content: _commentController.text.trim(),
+                                    usernameCurrentUser: usernameCurrentUser,
+                                    postId: post.id!,
+                                  );
+                              _commentController.clear();
+                              context
+                                  .read<TextControllerCubit>()
+                                  .isTextControllerEmpty(
+                                      _commentController.text);
+                            },
+                          ),
                         ),
-                      ),
+                ),
                 hintText: 'Add a comment for ...',
                 hintStyle: secondaryTextStyle,
                 contentPadding: const EdgeInsets.all(8),

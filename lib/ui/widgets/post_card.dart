@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/cubits/post_cubit.dart';
+import 'package:social_media_app/helpers/date_fomatter.dart';
+import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
+import 'package:social_media_app/ui/pages/comment/comment_page.dart';
 
 class PostCard extends StatelessWidget {
-  final String idCurrentUser;
-  final String postId;
-  final String username;
-  final String content;
-  final String dateTime;
-  final int totalComments;
-  final List<String> likes;
+  final String usernameCurrentUser;
+  final PostModel post;
 
   const PostCard({
     super.key,
-    required this.idCurrentUser,
-    required this.postId,
-    required this.username,
-    required this.content,
-    required this.dateTime,
-    required this.totalComments,
-    required this.likes,
+    required this.usernameCurrentUser,
+    required this.post,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool isLiked = likes.contains(idCurrentUser);
+    bool isLiked = post.likes.contains(usernameCurrentUser);
 
     void toggleLike() {
       isLiked = !isLiked;
 
       context.read<PostCubit>().toggleLike(
             isLiked: isLiked,
-            idCurrentUser: idCurrentUser,
-            postId: postId,
+            usernameCurrentUser: usernameCurrentUser,
+            postId: post.id!,
           );
     }
 
@@ -60,7 +53,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            username,
+                            post.username,
                             style: primaryTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: semiBold,
@@ -69,7 +62,7 @@ class PostCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          dateTime,
+                          dateFormatter(post.timestamp),
                           style: secondaryTextStyle.copyWith(
                             fontSize: 12,
                           ),
@@ -80,7 +73,7 @@ class PostCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      content,
+                      post.content,
                       style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: light,
@@ -96,7 +89,7 @@ class PostCard extends StatelessWidget {
                           iconPath: isLiked
                               ? '$iconsDir/is_liked.png'
                               : '$iconsDir/is_not_liked.png',
-                          total: likes.length,
+                          total: post.likes.length,
                           onTap: toggleLike,
                         ),
                         const SizedBox(
@@ -104,7 +97,16 @@ class PostCard extends StatelessWidget {
                         ),
                         buildAction(
                           iconPath: '$iconsDir/comment.png',
-                          total: totalComments,
+                          total: 2,
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommentPage(
+                                usernameCurrentUser: usernameCurrentUser,
+                                post: post,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

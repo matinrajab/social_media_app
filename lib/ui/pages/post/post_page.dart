@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/cubits/auth_cubit.dart';
 import 'package:social_media_app/cubits/auth_state.dart';
 import 'package:social_media_app/cubits/page_cubit.dart';
-import 'package:social_media_app/cubits/post_controller_cubit.dart';
-import 'package:social_media_app/cubits/post_controller_state.dart';
+import 'package:social_media_app/cubits/text_controller_cubit.dart';
+import 'package:social_media_app/cubits/text_controller_state.dart';
 import 'package:social_media_app/cubits/post_cubit.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
@@ -23,8 +23,8 @@ class PostPage extends StatelessWidget {
     String username = context
         .select((AuthCubit auth) => (auth.state as AuthSuccess).user.username);
     context
-        .read<PostControllerCubit>()
-        .isPostControllerEmpty(_postController.text);
+        .read<TextControllerCubit>()
+        .isTextControllerEmpty(_postController.text);
 
     return Scaffold(
       backgroundColor: backgroundColor1,
@@ -66,15 +66,15 @@ class PostPage extends StatelessWidget {
                             },
                           ),
                         ),
-                        BlocBuilder<PostControllerCubit, PostControllerState>(
+                        BlocBuilder<TextControllerCubit, TextControllerState>(
                           builder: (context, state) =>
-                              (state is PostControllerNotEmpty)
+                              (state is TextControllerNotEmpty)
                                   ? GestureDetector(
                                       onTap: () {
                                         _postController.clear();
                                         context
-                                            .read<PostControllerCubit>()
-                                            .isPostControllerEmpty(
+                                            .read<TextControllerCubit>()
+                                            .isTextControllerEmpty(
                                                 _postController.text);
                                       },
                                       child: const Icon(
@@ -93,8 +93,8 @@ class PostPage extends StatelessWidget {
                       controller: _postController,
                       onChanged: (value) {
                         context
-                            .read<PostControllerCubit>()
-                            .isPostControllerEmpty(value.trim());
+                            .read<TextControllerCubit>()
+                            .isTextControllerEmpty(value.trim());
                       },
                       style: primaryTextStyle,
                       cursorColor: primaryTextColor,
@@ -113,19 +113,19 @@ class PostPage extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    BlocBuilder<PostControllerCubit, PostControllerState>(
+                    BlocBuilder<TextControllerCubit, TextControllerState>(
                       builder: (context, state) => MyButton(
                         text: 'Post',
                         width: 65,
                         fontColor: backgroundColor1,
-                        buttonColor: (state is PostControllerEmpty)
+                        buttonColor: (state is TextControllerEmpty)
                             ? inactiveWhiteButtonColor
                             : whiteColor,
-                        borderColor: (state is PostControllerEmpty)
+                        borderColor: (state is TextControllerEmpty)
                             ? inactiveWhiteButtonColor
                             : whiteColor,
                         radius: 20,
-                        onTap: (state is PostControllerNotEmpty)
+                        onTap: (state is TextControllerNotEmpty)
                             ? () {
                                 context.read<PostCubit>().createPost(
                                       username: username,

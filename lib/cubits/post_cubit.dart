@@ -15,7 +15,7 @@ class PostCubit extends Cubit<PostState> {
         username: username,
         content: content,
       );
-      emit(const PostSuccess([]));
+      emit(PostSuccess());
     } catch (e) {
       emit(PostFailed('$e'));
     }
@@ -23,7 +23,7 @@ class PostCubit extends Cubit<PostState> {
 
   void toggleLike({
     required bool isLiked,
-    required String idCurrentUser,
+    required String usernameCurrentUser,
     required String postId,
   }) async {
     try {
@@ -31,11 +31,11 @@ class PostCubit extends Cubit<PostState> {
 
       await PostService().toggleLike(
         isLiked: isLiked,
-        idCurrentUser: idCurrentUser,
+        usernameCurrentUser: usernameCurrentUser,
         postId: postId,
       );
 
-      emit(const PostSuccess([]));
+      emit(PostSuccess());
     } catch (e) {
       emit(PostFailed('$e'));
     }

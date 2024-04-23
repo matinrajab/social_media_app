@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/ui/pages/auth/auth_page.dart';
 import 'package:social_media_app/ui/pages/auth/login_page.dart';
 import 'package:social_media_app/ui/pages/auth/register_page.dart';
-import 'package:social_media_app/ui/pages/comment/comment_page.dart';
 import 'package:social_media_app/ui/pages/main/main_page.dart';
 import 'package:social_media_app/ui/pages/post/post_page.dart';
 import 'package:social_media_app/ui/pages/profile/edit_profile_page.dart';
@@ -14,7 +13,6 @@ final Map<String, WidgetBuilder> routes = {
   RegisterPage.routeName: (context) => RegisterPage(),
   MainPage.routeName: (context) => MainPage(),
   PostPage.routeName: (context) => PostPage(),
-  CommentPage.routeName: (context) => const CommentPage(),
   EditProfilePage.routeName: (context) => const EditProfilePage(),
   SettingPage.routeName: (context) => const SettingPage(),
 };

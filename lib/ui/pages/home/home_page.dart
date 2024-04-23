@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         if (state is AuthSuccess) {
-          String idCurrentUser = state.user.id;
+          String usernameCurrentUser = state.user.username;
           return StreamBuilder<List<PostModel>>(
             stream: PostService().getAllPosts(),
             builder: (context, snapshot) {
@@ -26,13 +26,8 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final PostModel post = snapshot.data![index];
                     return PostCard(
-                      idCurrentUser: idCurrentUser,
-                      postId: post.postId!,
-                      username: post.username,
-                      dateTime: '2w',
-                      content: post.content,
-                      totalComments: 2,
-                      likes: post.likes,
+                      usernameCurrentUser: usernameCurrentUser,
+                      post: post,
                     );
                   },
                 );
