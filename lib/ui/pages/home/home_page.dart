@@ -25,16 +25,14 @@ class HomePage extends StatelessWidget {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final PostModel post = snapshot.data![index];
-                    final List<String> likes = post.likes;
                     return PostCard(
                       idCurrentUser: idCurrentUser,
                       postId: post.postId!,
                       username: post.username,
                       dateTime: '2w',
                       content: post.content,
-                      totalLikes: likes.length,
                       totalComments: 2,
-                      likes: likes,
+                      likes: post.likes,
                     );
                   },
                 );
@@ -46,12 +44,12 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               } else {
-                return MyCircularIndicator.show();
+                return MyCircularIndicator.show(color: whiteColor);
               }
             },
           );
         } else {
-          return MyCircularIndicator.show();
+          return MyCircularIndicator.show(color: whiteColor);
         }
       },
     );

@@ -10,7 +10,6 @@ class PostCard extends StatelessWidget {
   final String username;
   final String content;
   final String dateTime;
-  final int totalLikes;
   final int totalComments;
   final List<String> likes;
 
@@ -21,7 +20,6 @@ class PostCard extends StatelessWidget {
     required this.username,
     required this.content,
     required this.dateTime,
-    required this.totalLikes,
     required this.totalComments,
     required this.likes,
   });
@@ -98,7 +96,7 @@ class PostCard extends StatelessWidget {
                           iconPath: isLiked
                               ? '$iconsDir/is_liked.png'
                               : '$iconsDir/is_not_liked.png',
-                          total: totalLikes,
+                          total: likes.length,
                           onTap: toggleLike,
                         ),
                         const SizedBox(

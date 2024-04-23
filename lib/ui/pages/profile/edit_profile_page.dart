@@ -43,21 +43,21 @@ class EditProfilePage extends StatelessWidget {
                   children: [
                     buildSection(
                       context,
-                      title: 'Name',
+                      fieldName: 'Name',
                       content: user.name,
                       maxLength: 150,
                     ),
                     buildDivider(),
                     buildSection(
                       context,
-                      title: 'Username',
+                      fieldName: 'Username',
                       content: user.username,
                       maxLength: 30,
                     ),
                     buildDivider(),
                     buildSection(
                       context,
-                      title: 'Bio',
+                      fieldName: 'Bio',
                       content: isBioEmpty ? '+ Write bio' : user.bio,
                       contentTextColor:
                           isBioEmpty ? secondaryTextColor : primaryTextColor,
@@ -76,7 +76,7 @@ class EditProfilePage extends StatelessWidget {
 
   Widget buildSection(
     context, {
-    required String title,
+    required String fieldName,
     required String content,
     Color contentTextColor = primaryTextColor,
     bool isContentNull = false,
@@ -87,7 +87,7 @@ class EditProfilePage extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => EditProfileFieldPage(
-            title: title,
+            field: fieldName,
             content: isContentNull ? '' : content,
             maxLength: maxLength,
           ),
@@ -97,7 +97,7 @@ class EditProfilePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            fieldName,
             style: primaryTextStyle.copyWith(
               fontWeight: medium,
             ),

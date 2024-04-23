@@ -32,4 +32,16 @@ class UserService {
       rethrow;
     }
   }
+
+  Future<void> updateUserField({
+    required String id,
+    required String field,
+    required String newValue,
+  }) async {
+    try {
+      await _userReference.doc(id).update({field: newValue});
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
