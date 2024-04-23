@@ -7,7 +7,7 @@ class UserService {
 
   Future<void> setUser(UserModel user) async {
     try {
-      _userReference.doc(user.id).set({
+      await _userReference.doc(user.id).set({
         'email': user.email,
         'name': user.name,
         'username': user.username,

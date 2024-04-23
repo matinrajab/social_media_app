@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app/cubits/post_cubit.dart';
-import 'package:social_media_app/helpers/date_fomatter.dart';
+import 'package:social_media_app/helpers/date_formatter.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
 import 'package:social_media_app/ui/pages/comment/comment_page.dart';
+import 'package:social_media_app/ui/widgets/delete_modal_bottom_sheet.dart';
+import 'package:social_media_app/ui/widgets/my_alert_dialog.dart';
 
 class PostCard extends StatelessWidget {
   final String usernameCurrentUser;
@@ -29,6 +31,29 @@ class PostCard extends StatelessWidget {
             usernameCurrentUser: usernameCurrentUser,
             postId: post.id!,
           );
+    }
+
+    displayDialog() async {
+      await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => MyAlertDialog(
+          alertText: 'Delete this Post?',
+          acceptText: 'Delete',
+          onAcceptTapped: () {
+            context.read<PostCubit>().deletePost(post.id!);
+            Navigator.pop(context);
+          },
+        ),
+      );
+      if (!context.mounted) return;
+      Navigator.pop(context);
+    }
+
+    onMoreTapped() {
+      DeleteModalBottomSheet.show(
+        context,
+        onTap: displayDialog,
+      );
     }
 
     return Column(
@@ -61,11 +86,31 @@ class PostCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Text(
-                          dateFormatter(post.timestamp),
-                          style: secondaryTextStyle.copyWith(
-                            fontSize: 12,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              dateFormatter(post.timestamp),
+                              style: secondaryTextStyle.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                            (post.username == usernameCurrentUser)
+                                ? Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      GestureDetector(
+                                        onTap: onMoreTapped,
+                                        child: const Icon(
+                                          moreHorizIcon,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox(),
+                          ],
                         ),
                       ],
                     ),
@@ -97,7 +142,7 @@ class PostCard extends StatelessWidget {
                         ),
                         buildAction(
                           iconPath: '$iconsDir/comment.png',
-                          total: 2,
+                          total: 0,
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(

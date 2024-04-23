@@ -11,7 +11,7 @@ class CommentService {
     required String postId,
   }) async {
     try {
-      _postReference.doc(postId).collection('comments').add({
+      await _postReference.doc(postId).collection('comments').add({
         'content': content,
         'commentator': usernameCurrentUser,
         'timestamp': Timestamp.now(),

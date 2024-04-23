@@ -10,7 +10,7 @@ class PostService {
     required String content,
   }) async {
     try {
-      _postReference.add({
+      await _postReference.add({
         'username': username,
         'content': content,
         'timestamp': Timestamp.now(),
@@ -53,6 +53,23 @@ class PostService {
             ? FieldValue.arrayUnion([usernameCurrentUser])
             : FieldValue.arrayRemove([usernameCurrentUser]),
       });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      CollectionReference commentReference =
+          _postReference.doc(postId).collection('comments');
+
+      var commentDocs = await commentReference.get();
+
+      for (var doc in commentDocs.docs) {
+        await commentReference.doc(doc.id).delete();
+      }
+
+      await _postReference.doc(postId).delete();
     } catch (e) {
       rethrow;
     }

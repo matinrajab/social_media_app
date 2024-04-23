@@ -40,4 +40,16 @@ class PostCubit extends Cubit<PostState> {
       emit(PostFailed('$e'));
     }
   }
+
+  void deletePost(String postId) async {
+    try {
+      emit(PostLoading());
+
+      await PostService().deletePost(postId);
+
+      emit(PostSuccess());
+    } catch (e) {
+      emit(PostFailed('$e'));
+    }
+  }
 }

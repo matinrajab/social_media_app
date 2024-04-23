@@ -50,3 +50,5 @@ BorderRadius defaultBorderRadius = BorderRadius.circular(defaultRadius);
 const IconData closeIcon = Icons.close_rounded;
 const IconData backIcon = Icons.arrow_back_rounded;
 const IconData checkIcon = Icons.check;
+const IconData moreHorizIcon = Icons.more_horiz;
+const IconData deleteOutlinedIcon = Icons.delete_outlined;

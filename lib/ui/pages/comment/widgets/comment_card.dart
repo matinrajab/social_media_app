@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/helpers/date_fomatter.dart';
+import 'package:social_media_app/helpers/date_formatter.dart';
 import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/shared/assets_dir.dart';
 import 'package:social_media_app/shared/theme.dart';
